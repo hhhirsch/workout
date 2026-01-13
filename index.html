@@ -469,6 +469,38 @@
             nav {
                 display: none;
             }
+        /* HERO FIX */
+           .hero {
+            padding: 60px 0;
+            background: white;
+           }
+
+           .hero-grid {
+             display: grid;
+             grid-template-columns: 1.15fr 0.85fr;
+             gap: 40px;
+             align-items: start;
+           }
+
+           .hero-aside {
+             display: grid;
+             gap: 20px;
+           }
+
+        /* Mobile */
+           @media (max-width: 768px) {
+             .hero-grid {
+              grid-template-columns: 1fr;
+           }
+
+           .hero-buttons {
+             flex-direction: column;
+             align-items: stretch;
+           }
+
+           .hero-image {
+             height: 260px;
+           }
         }
     </style>
 </head>
