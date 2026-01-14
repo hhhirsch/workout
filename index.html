@@ -27,6 +27,7 @@
       line-height: 1.6;
       color: var(--text);
       background: var(--bg);
+      overflow-x: hidden;
     }
 
     a { color: inherit; }
@@ -91,7 +92,7 @@
     }
     .btn-secondary:hover { background: #f3f4f6; }
 
-    /* Global Sections */
+    /* Sections */
     section { padding: 72px 0; }
     .section-title {
       text-align: center;
@@ -127,7 +128,6 @@
       flex-wrap: wrap;
       margin-bottom: 6px;
     }
-
     .hero-aside { display: grid; gap: 18px; }
 
     .hero-image {
@@ -137,15 +137,13 @@
       height: 360px;
       box-shadow: var(--shadow);
     }
-    
     .hero-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 70% 35%; /* Fokus Richtung Vater/Kind, anpassbar */
+      object-position: 70% 35%;
+      display: block;
     }
-
-    .hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* Pricing */
     .pricing-section {
@@ -188,7 +186,7 @@
     .pricing-features li::before { content: "✓ "; color: var(--ok); font-weight: 900; margin-right: 8px; }
     .pricing-card .btn { width: 100%; }
 
-    /* Cards / Grids */
+    /* Problem cards */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -218,17 +216,20 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 22px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
     }
     .step .kicker {
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 8px;
       font-weight: 800;
     }
-    .step h4 { font-size: 18px; margin-bottom: 8px; }
+    .step h4 { font-size: 18px; }
     .step p { color: var(--muted); font-size: 15px; }
+    .step .btn { width: 100%; margin-top: 6px; }
 
     /* Benefits */
     .benefits-section { background: var(--card); }
@@ -338,6 +339,77 @@
       font-size: 14px;
     }
 
+    /* Modal (dialog) */
+    .modal {
+      width: min(720px, calc(100% - 28px));
+      border: none;
+      padding: 0;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+    .modal::backdrop { background: rgba(17,24,39,0.55); }
+
+    .modal-card { padding: 18px; }
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .modal-close {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      color: #111827;
+      padding: 6px 10px;
+      border-radius: 10px;
+    }
+    .modal-close:hover { background: #f3f4f6; }
+
+    .modal-sub { color: var(--muted); font-size: 14px; margin-bottom: 14px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .form-grid label { font-size: 13px; color: #374151; font-weight: 700; }
+    .form-grid input, .form-grid select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 16px;
+      background: #fff;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+    .checkrow {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .checkrow input { width: 18px; height: 18px; margin-top: 0; }
+
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 900px) {
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .modal-actions { grid-template-columns: 1fr 1fr; }
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
@@ -401,6 +473,7 @@
                 alt="Vater trägt Kind (Alltag)"
                 loading="lazy"
               />
+            </div>
 
             <div class="pricing-section" id="preise">
               <div class="pricing-card">
@@ -467,14 +540,15 @@
         <div class="steps">
           <div class="step">
             <div class="kicker">Step 1</div>
-            <h4>Check-in & Setup</h4>
-            <p>Kurzer Start-Call, Ziele, Alltag, Level. Du bekommst einen einfachen Plan, der wirklich in deine Woche passt.</p>
+            <h4>Self‑Assessment (2 Min.)</h4>
+            <p>Kurze Fragen zu Ziel, Alltag, Rücken & Stress. Danach bekommst du eine klare Kickstart‑Empfehlung.</p>
+            <button class="btn btn-primary" id="openSelfAssessment" type="button">Self‑Assessment starten</button>
           </div>
 
           <div class="step">
             <div class="kicker">Step 2</div>
             <h4>4 Wochen System</h4>
-            <p>4×/Woche 20–30 Minuten: 3× Kraft (Ganzkörper) + 1× Reset (Bewegen + Mobility + Downshift).</p>
+            <p>4×/Woche 20–30 Minuten: 3× Kraft (Ganzkörper) + 1× Reset (Bewegen + Mobility + Downshift) angepasst an dein Level.</p>
           </div>
 
           <div class="step">
@@ -636,6 +710,134 @@
       <div class="footer-bottom">© 2026 Busy Dad Kickstart · Berlin</div>
     </div>
   </footer>
+
+  <!-- Self-Assessment Dialog (muss im BODY stehen) -->
+  <dialog id="selfAssessmentDialog" class="modal" aria-labelledby="saTitle">
+    <form method="dialog" class="modal-card" id="selfAssessmentForm">
+      <div class="modal-head">
+        <h3 id="saTitle">Busy Dad Kickstart – Self‑Assessment</h3>
+        <button type="button" class="modal-close" id="closeSelfAssessment" aria-label="Schließen">×</button>
+      </div>
+
+      <p class="modal-sub">
+        Dauert ca. 2 Minuten. Kein medizinischer Check – bei Warnzeichen bitte vorher ärztlich abklären.
+      </p>
+
+      <div class="form-grid">
+        <label>
+          Name
+          <input name="name" type="text" autocomplete="name" required />
+        </label>
+
+        <label>
+          E‑Mail
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+
+        <label>
+          Hauptziel (4 Wochen)
+          <select name="goal" required>
+            <option value="" disabled selected>Bitte wählen…</option>
+            <option>Wieder fitter / mehr Energie</option>
+            <option>Rücken belastbarer</option>
+            <option>Stress abbauen / besser schlafen</option>
+            <option>Gewicht reduzieren</option>
+          </select>
+        </label>
+
+        <label>
+          Zeitfenster (realistisch)
+          <select name="time" required>
+            <option value="" disabled selected>Bitte wählen…</option>
+            <option>Morgen</option>
+            <option>Mittagspause</option>
+            <option>Abend</option>
+            <option>Wochenende</option>
+            <option>Mix</option>
+          </select>
+        </label>
+
+        <label>
+          Trainingsort
+          <select name="place" required>
+            <option value="" disabled selected>Bitte wählen…</option>
+            <option>Zuhause</option>
+            <option>Innenhof</option>
+            <option>Park/Outdoor</option>
+            <option>Mix</option>
+          </select>
+        </label>
+
+        <label>
+          Equipment (optional)
+          <select name="equipment">
+            <option value="" selected>Keins / nur Körpergewicht</option>
+            <option>Matte</option>
+            <option>Miniband</option>
+            <option>Ringe (optional)</option>
+            <option>Mix</option>
+          </select>
+        </label>
+
+        <label>
+          Rücken aktuell (0–10)
+          <input name="backPain" type="number" min="0" max="10" inputmode="numeric" placeholder="0–10" required />
+        </label>
+
+        <label>
+          Stresslevel (0–10)
+          <input name="stress" type="number" min="0" max="10" inputmode="numeric" placeholder="0–10" required />
+        </label>
+
+        <label class="full">
+          Sicherheitscheck: Keine akuten Warnzeichen (Taubheit im Schritt/Sattelbereich, Blasen-/Darmprobleme, Ohnmacht/Brustschmerz unter Belastung).
+          <span class="checkrow">
+            <input name="safety" type="checkbox" required />
+            <span>Bestätige ich.</span>
+          </span>
+        </label>
+
+        <label class="full">
+          Wie willst du starten?
+          <select name="start" required>
+            <option value="" disabled selected>Bitte wählen…</option>
+            <option>1:1 (100 € / 60 Min)</option>
+            <option>1:2 Bring‑your‑friend (150 € / 60 Min)</option>
+          </select>
+        </label>
+
+        <label class="full">
+          Größtes Hindernis (optional)
+          <input name="obstacle" type="text" placeholder="z. B. Zeit, Motivation, Rücken, Stress…" />
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-primary">Absenden</button>
+        <button type="button" class="btn btn-secondary" id="cancelSelfAssessment">Abbrechen</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const openBtn = document.getElementById('openSelfAssessment');
+    const dialog = document.getElementById('selfAssessmentDialog');
+    const closeBtn = document.getElementById('closeSelfAssessment');
+    const cancelBtn = document.getElementById('cancelSelfAssessment');
+    const form = document.getElementById('selfAssessmentForm');
+
+    openBtn?.addEventListener('click', () => dialog.showModal());
+    closeBtn?.addEventListener('click', () => dialog.close());
+    cancelBtn?.addEventListener('click', () => dialog.close());
+
+    dialog?.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    form?.addEventListener('submit', () => {
+      dialog.close();
+      alert('Danke! Wir melden uns für den Kickstart.');
+    });
+  </script>
 </body>
 </html>
-
